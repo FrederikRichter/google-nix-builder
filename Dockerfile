@@ -1,18 +1,15 @@
-FROM debian:stable-slim
+FROM nixos/nix:latest
 
 # Install required packages
 RUN apt-get update && \
-    apt-get install -y curl openssh-server xz-utils && \
+    apt-get install -y openssh-server && \
     apt-get clean
-
-# Install Nix
-RUN sh <(curl -L https://nixos.org/nix/install) --daemon
 
 # Setup SSH
 RUN mkdir /var/run/sshd && \
     echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
     echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && \
-    echo 'root:password' | chpasswd
+    echo 'root:yourpassword' | chpasswd
 
 # Expose SSH port
 EXPOSE 22
