@@ -2,7 +2,7 @@ FROM debian:stable-slim
 
 # Install required packages
 RUN apt-get update && \
-    apt-get install -y curl openssh-server xz && \
+    apt-get install -y curl openssh-server xz-utils && \
     apt-get clean
 
 # Download and install Nix
