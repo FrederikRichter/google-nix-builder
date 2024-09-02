@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:stable
 
 # Install required packages
 RUN apt-get update && \
