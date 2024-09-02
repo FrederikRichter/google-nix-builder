@@ -27,4 +27,3 @@ CMD ["sshd", "-D"]
 
 # Add Nix configuration to allow the container to act as a remote builder
 RUN mkdir -p /etc/nix
-COPY nix.conf /etc/nix/nix.conf
