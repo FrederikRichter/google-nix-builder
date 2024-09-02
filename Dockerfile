@@ -1,9 +1,7 @@
-FROM nixos/nix:latest
+FROM nixos/nix
 
-# Install required packages
-RUN apt-get update && \
-    apt-get install -y openssh-server && \
-    apt-get clean
+# Install openssh package
+RUN nix-env -iA nixpkgs.openssh
 
 # Setup SSH
 RUN mkdir /var/run/sshd && \
@@ -15,4 +13,4 @@ RUN mkdir /var/run/sshd && \
 EXPOSE 22
 
 # Start SSH service
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/nix/store/$(basename $(readlink /nix/var/nix/profiles/default))/bin/sshd", "-D"]
