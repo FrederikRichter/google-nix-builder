@@ -23,7 +23,7 @@ RUN passwd -d root
 EXPOSE 22
 
 # Start SSH service
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["sshd", "-D"]
 
 # Add Nix configuration to allow the container to act as a remote builder
 RUN mkdir -p /etc/nix
