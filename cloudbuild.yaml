@@ -1,0 +1,22 @@
+steps:
+- name: 'curl'
+  args: ['-L', 'https://nixos.org/nix/install', '-o', 'install-nix.sh']
+
+- name: 'bash'
+  args: ['install-nix.sh']
+
+- name: 'docker'
+  args: ['pull', 'gcr.io/$PROJECT_ID/nix-cache']
+
+- name: 'docker'
+  args: ['run', '-v', '/nix:/nix', 'gcr.io/$PROJECT_ID/nix-cache']
+
+- name: 'bash'
+  entrypoint: 'nix'
+  args: ['--extra-experimental-features', 'nix-command flakes', 'build', '.#yourPackage']
+  env:
+    - 'NIX_REMOTE=daemon'
+    - 'NIX_BUILD_CORES=0'
+
+- name: 'docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/nix-cache']
