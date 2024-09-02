@@ -19,4 +19,3 @@ EXPOSE 22
 
 # Start SSH service
 CMD ["/usr/sbin/sshd", "-D"]
-
