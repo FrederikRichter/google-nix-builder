@@ -1,0 +1,20 @@
+# Use the official Nix image from Docker Hub
+FROM nixos/nix
+
+# Install openssh package
+RUN nix-env -iA nixpkgs.openssh
+
+# Create SSH directory and set up SSH keys
+RUN mkdir -p /etc/ssh /root/.ssh \
+    && ssh-keygen -A
+
+# Place ssh public key to trusted
+RUN echo 'SSH_KEY_PLACEHOLDER' > /root/.ssh/authorized_keys \
+    && chmod 600 /root/.ssh/authorized_keys \
+    && chown root:root /root/.ssh/authorized_keys
+
+# Expose SSH port
+EXPOSE 22
+
+# Start the SSH service
+CMD ["/nix/store/*-openssh-*/bin/sshd", "-D"]
