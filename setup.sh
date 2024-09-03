@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "removing Dockerfile from .gitignore"
+sed -i '/^Dockerfile$/d' .gitignore
 echo "logging into gcloud"
 gcloud auth login
 read -p "Enter project id: " project_id
@@ -14,3 +16,5 @@ echo "building dockerfile on google build"
 gcloud builds submit --config cloudbuild.yaml .
 echo "deleting Dockerfile"
 rm Dockerfile
+echo "appending Dockerfile to .gitignore"
+echo "Dockerfile" >> .gitignore
