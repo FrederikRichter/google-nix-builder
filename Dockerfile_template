@@ -1,6 +1,9 @@
 # Use the official Nix image from Docker Hub
 FROM nixos/nix
 
+# Set nix store to outside volume
+RUN echo "store = /mnt/build_cache/" >> /etc/nix/nix.conf
+
 # Install openssh package
 RUN nix-env -iA nixpkgs.openssh
 
