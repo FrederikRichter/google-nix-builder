@@ -3,18 +3,18 @@
 # BUILD PROCESS
 echo "removing Dockerfile from .gitignore"
 sed -i '/^Dockerfile$/d' .gitignore
-echo "logging into gcloud"
-gcloud auth login
-read -p "Enter project id: " project_id
-echo "setting gcloud project"
-gcloud config set project "$project_id"
+echo "generating Dockerfile from template"
+cp Dockerfile_template Dockerfile
+git add Dockerfile
+echo "init gcloud"
+gcloud init
+echo "retrieving project id"
+gcloud config get-value project
 echo "getting region"
 read -p "Enter region: " region
 echo "generating ssh keys"
 ssh-keygen -t rsa -f ./cloudbuild_ssh -C "$USER" -N ''
-echo "generating Dockerfile from template"
-cp Dockerfile_template Dockerfile
-echo "copying ssh public key to project"
+echo "copying ssh public key to Dockerfile"
 sed -i "s|SSH_KEY_PLACEHOLDER|$(cat ./cloudbuild_ssh.pub | sed 's|[/&]|\\&|g')|g" Dockerfile
 echo "building dockerfile on google build"
 gcloud builds submit --region="$region" --config cloudbuild.yaml .
