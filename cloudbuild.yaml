@@ -1,6 +1,0 @@
-steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--no-cache', '-t', 'nix-remote-builder:latest', '.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/nix-remote-build/nix-remote-builder:latest']
-
