@@ -1,2 +1,3 @@
 cloudbuild_ssh
 cloudbuild_ssh.pub
+nixpkgs/
